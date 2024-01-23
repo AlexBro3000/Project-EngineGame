@@ -1,4 +1,6 @@
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+#include <glfw/glfw3.h>
+#include <iostream>
 
 int main(void)
 {
@@ -18,6 +20,14 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
+	
+	if (!gladLoadGL())
+	{
+		std::cout << "ERROR";
+		return -1;
+	}
+	
+	std::cout << GLVersion.major << "." << GLVersion.minor << std::endl;
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
