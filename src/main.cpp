@@ -1,42 +1,19 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
+#include <stb_image.h>
 
 #include "graphic/buffer/EBO.h"
 #include "graphic/buffer/VAO.h"
 #include "graphic/buffer/VBO.h"
 #include "graphic/shader/ShaderProgram.h"
+#include "graphic/texture/Texture.h"
+#include "system/manager/Directory.h"
 #include "system/manager/ResourceManager.h"
 #include "system/window/Window.h"
 #include <iostream>
 
-
-//GLfloat point[] = {
-//    -0.5f,  -0.5f, 0.0f,
-//     0.5f,  -0.5f, 0.0f,
-//     0.0f,   0.5f, 0.0f,
-//
-//     0.0f,  -0.5f, 0.0f,
-//     0.25f,  0.0f, 0.0f,
-//    -0.25f,  0.0f, 0.0f,
-//};
-//GLuint index[] = {
-//    0, 3, 5,
-//    3, 1, 4,
-//    5, 4, 2,
-//};
-//
-//GLfloat color[] = {
-//    1.0f, 0.0f, 0.0f,
-//    0.0f, 1.0f, 0.0f,
-//    0.0f, 0.0f, 1.0f,
-//
-//    1.0f, 0.0f, 0.0f,
-//    0.0f, 1.0f, 0.0f,
-//    0.0f, 0.0f, 1.0f
-//};
-
 int window_width  = 1000;
-int window_height = 800;
+int window_height = 1000;
 
 void glfwWindowSizeCallback(GLFWwindow* window, int width, int height)
 {
@@ -61,76 +38,19 @@ int main(int argc, char** argv)
 
     ShaderProgram shader = ResourceManager::ShaderProgram::load("Main", "main_vert.glsl", "main_frag.glsl");
 
-
-    //glBindVertexArray(VAO);
-
-    //glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(point), point, GL_STATIC_DRAW);
-
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(point), point, GL_STATIC_DRAW);
- 
-    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
-    //glEnableVertexAttribArray(0);
-
-
-    //glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //glBindVertexArray(0);
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    // Vertices coordinates
     GLfloat vertices[] =
     {
-        -0.5f,      -0.5f,      0.0f,   1.0f, 0.0f, 0.0f,
-        0.5f,       -0.5f,      0.0f,   0.0f, 1.0f, 0.0f,
-        0.0f,       0.5f,       0.0f,   0.0f, 0.0f, 1.0f,
-        -0.25f,     0.0f,       0.0f,   0.5f, 0.5f, 0.0f,
-        0.25f,      0.0f,       0.0f,   0.5f, 0.0f, 0.5f,
-        0.0f,       -0.5f,      0.0f,   0.0f, 0.5f, 0.5f,
+        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, -0.2f, -0.2f,
+        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, -0.2f,  1.2f,
+         0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  1.2f,  1.2f,
+         0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,  1.2f, -0.2f,
     };
 
-    // Indices for vertices order
     GLuint indices[] =
     {
-        0, 3, 5, // Lower left triangle
-        3, 2, 4, // Upper triangle
-        5, 4, 1 // Lower right triangle
+        0, 2, 1,
+        0, 3, 2,
     };
-
-    //// Create reference containers for the Vartex Array Object, the Vertex Buffer Object, and the Element Buffer Object
-    //GLuint VAO, VBO, EBO;
-
-    //// Generate the VAO, VBO, and EBO with only 1 object each
-    //glGenVertexArrays(1, &VAO);
-    //glGenBuffers(1, &VBO);
-    //glGenBuffers(1, &EBO);
-
-    //// Make the VAO the current Vertex Array Object by binding it
-    //glBindVertexArray(VAO);
-
-    //// Bind the VBO specifying it's a GL_ARRAY_BUFFER
-    //glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    //// Introduce the vertices into the VBO
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    //// Bind the EBO specifying it's a GL_ELEMENT_ARRAY_BUFFER
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    //// Introduce the indices into the EBO
-    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    //// Enable the Vertex Attribute so that OpenGL knows to use it
-    //glEnableVertexAttribArray(0);
-    //// Configure the Vertex Attribute so that OpenGL knows how to read the VBO
-    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
-    //// Bind both the VBO and VAO to 0 so that we don't accidentally modify the VAO and VBO we created
-    //glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //glBindVertexArray(0);
-    //// Bind the EBO to 0 so that we don't accidentally modify it
-    //// MAKE SURE TO UNBIND IT AFTER UNBINDING THE VAO, as the EBO is linked in the VAO
-    //// This does not apply to the VBO because the VBO is already linked to the VAO during glVertexAttribPointer
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     VAO vao;
     vao.bind();
@@ -141,48 +61,36 @@ int main(int argc, char** argv)
     EBO ebo(indices, sizeof(indices));
 
     // Links VBO to VAO
-    vao.linkAttrib(vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
-    vao.linkAttrib(vbo, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao.linkAttrib(vbo, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
+    vao.linkAttrib(vbo, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao.linkAttrib(vbo, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+
 
     // Unbind all to prevent accidentally modifying them
     vao.unbind();
     vbo.unbind();
     ebo.unbind();
 
+    // TEXTURE
 
-
-    
-    /*GLuint points_vbo = 0;
-    glGenBuffers(1, &points_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(point), point, GL_STATIC_DRAW);
-
-    GLuint colors_vbo = 0;
-    glGenBuffers(1, &colors_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(color), color, GL_STATIC_DRAW);
-
-    GLuint vao = 0;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);*/
+    Texture texture(
+        "C:\\Users\\alexb\\Desktop\\Новая папка\\Project-EngineGame\\build\\Debug\\res\\textures\\default\\brick-5.png",
+        GL_TEXTURE_2D,
+        GL_TEXTURE0,
+        GL_RGB,
+        GL_UNSIGNED_BYTE
+    );
+    texture.useShaderUniform(shader, "u_texture");
 
     /* Loop until the user closes the window */
     while (!Window::isShouldClose())
     {
         glClear(GL_COLOR_BUFFER_BIT);
         shader.use();
+        texture.bind();
         
-        //glBindVertexArray(VAO);
-        //glDrawArrays(GL_TRIANGLES, 0, 6);
         vao.bind();
-        glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
         Window::swapBuffers();
         glfwPollEvents();
@@ -191,6 +99,7 @@ int main(int argc, char** argv)
     vao.~VAO();
     vbo.~VBO();
     ebo.~EBO();
+    texture.~Texture();
 
     Window::Terminate();
     ResourceManager::Terminate();

@@ -8,10 +8,14 @@ void main() {
 }*/
 
 #version 330 core
-in vec3 color;
+in vec3 ourColor;
+in vec2 ourPos;
+
 out vec4 FragColor;
+
+uniform sampler2D u_texture;
 
 void main()
 {
-   FragColor = vec4(color, 1.0f);
+   FragColor = texture(u_texture, ourPos);
 }

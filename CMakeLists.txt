@@ -8,6 +8,8 @@ project(Project-EngineGame)
 
 # Указание исходных файлов.
 set(SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/include/include.cpp
+	
 	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/buffer/EBO.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/buffer/EBO.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/buffer/VAO.h
@@ -16,6 +18,8 @@ set(SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/buffer/VBO.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/shader/ShaderProgram.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/shader/ShaderProgram.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/texture/Texture.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/texture/Texture.h
 
 	${CMAKE_CURRENT_SOURCE_DIR}/src/system/console/Console.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/system/console/Console.h
@@ -79,3 +83,8 @@ target_link_libraries(${PROJECT_NAME} glfw)
 # Добавление поддиректории с библиотекой GLAD и связывание её с проектом.
 add_subdirectory(lib/glad)
 target_link_libraries(${PROJECT_NAME} glad)
+
+# Добавление библиотеки stb как объектной библиотеки и связывание её с проектом.
+add_library(stb INTERFACE)
+target_include_directories(stb INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/lib/stb)
+target_link_libraries(${PROJECT_NAME} stb)

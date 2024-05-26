@@ -15,7 +15,7 @@ struct WindowSettings
     /**
      * @brief Конструктор структуры WindowSettings по умолчанию.
      */
-    WindowSettings() : width(800), height(600), title("Window") {}
+    WindowSettings() : width(800), height(800), title("Window") {}
 
     /**
      * @brief Конструктор структуры WindowSettings.

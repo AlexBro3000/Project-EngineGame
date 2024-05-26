@@ -21,6 +21,11 @@ ShaderProgram::~ShaderProgram()
 	}
 }
 
+GLuint ShaderProgram::getID()
+{
+	return ID;
+}
+
 bool ShaderProgram::load(const std::string& file_vert, const std::string& file_frag)
 {
 	std::string vert_code, frag_code;

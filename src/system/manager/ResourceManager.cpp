@@ -15,7 +15,7 @@ void ResourceManager::Init(int argc, char** argv)
 	std::string path = getLaunchDirectory(argv[0]);
 
 	ResourceManager::Directory::load("RES", path + "\\res", true);
-	ResourceManager::Directory::load("Shader", "RES", "shader", true);
+	ResourceManager::Directory::load("Shader", "RES", "shaders\\default", true);
 }
 
 void ResourceManager::Terminate()

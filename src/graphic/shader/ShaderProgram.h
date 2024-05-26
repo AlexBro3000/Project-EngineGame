@@ -20,6 +20,8 @@ public:
 	ShaderProgram(const std::string& file_vert, const std::string& file_frag);
 	~ShaderProgram();
 
+	GLuint getID();
+
 	bool load(const std::string& file_vert, const std::string& file_frag);
 	void use() const;
 
