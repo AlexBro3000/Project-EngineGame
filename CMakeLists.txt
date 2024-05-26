@@ -27,6 +27,8 @@ set(SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/src/system/manager/Directory.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/system/manager/ResourceManager.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/system/manager/ResourceManager.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/system/window/Event.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/system/window/Event.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/system/window/Window.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/system/window/Window.h
 
