@@ -17,17 +17,21 @@ int Window::Init()
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
         // glfwWindowHint(GLFW_SAMPLES, 4);
         // glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
+        glfwSetErrorCallback([](int error, const char* description) {
+            Console::Error("GLFW Error", description);
+        });
         Console::Info("The GLFW library initialization was successful");
     }
     else {
         Console::Error("Failed to initialize GLFW library");
         return -1;
     }
-    
+
     /* Инициалзация оконного приложения */
     Window::window = glfwCreateWindow(setting.width, setting.height, setting.title, NULL, NULL);
     if (window) {
@@ -40,9 +44,6 @@ int Window::Init()
         Console::Error("Failed to create window");
         return -1;
     }
-
-    // glfwSetWindowSizeCallback(window, glfwWindowSizeCallback);
-    // glfwSetKeyCallback(window, glfwKeyCallback);
 
     /* Инициалзация библиотеки GLAD */
     if (gladLoadGL()) {
@@ -70,15 +71,25 @@ void Window::Terminate()
 	glfwTerminate();
 }
 
-//void Window::setCursorMode(int mode)
-//{
-//	glfwSetInputMode(window, GLFW_CURSOR, mode);
-//}
+int Window::getWidth()
+{
+    return setting.width;
+}
 
-//void Window::setShouldClose(bool flag)
-//{
-//	glfwSetWindowShouldClose(window, flag);
-//}
+int Window::getHeight()
+{
+    return setting.height;
+}
+
+void Window::setCursorMode(int mode)
+{
+    glfwSetInputMode(window, GLFW_CURSOR, mode);
+}
+
+void Window::setShouldClose(bool flag)
+{
+	glfwSetWindowShouldClose(window, flag);
+}
 
 bool Window::isShouldClose()
 {

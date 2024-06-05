@@ -1,25 +1,20 @@
-/* #version 460 core
-
-layout(location = 0) in vec3 vertex_position;
-// layout(location = 1) in vec3 vertex_color;
-out vec3 color;
-
-void main() {
-   color = vec3(1.0f, 0.5f, 0.2f); // vertex_color;
-   gl_Position = vec4(vertex_position, 1.0);
-}*/
-
-#version 330 core
+#version 460 core
 layout (location = 0) in vec3 vertex_position;
-layout (location = 1) in vec3 vertex_color;
-layout (location = 2) in vec2 vertex_texture;
+layout (location = 1) in vec2 vertex_texture;
+layout (location = 2) in vec3 vertex_normal;
 
-out vec3 ourColor;
-out vec2 ourPos;
+out vec3 out_curent_position;
+out vec2 out_texture_position;
+out vec3 out_normal;
+
+uniform mat4 model;
+uniform mat4 projview;
 
 void main()
 {
-	gl_Position = vec4(vertex_position, 1.0);
-	ourColor = vertex_color;
-	ourPos   = vertex_texture;
+	out_curent_position  = vec3(model * vec4(vertex_position, 1.0));
+	out_texture_position = vertex_texture;
+	out_normal           = vertex_normal;
+
+	gl_Position = projview * vec4(out_curent_position, 1.0);
 }

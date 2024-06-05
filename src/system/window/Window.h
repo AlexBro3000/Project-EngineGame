@@ -39,6 +39,9 @@ private:
     //static double prev_time;        // Предыдущее время
     //static int frames;              // Количество кадров
 
+    friend class Event;
+    friend void  glfwWindowSizeCallback(GLFWwindow* window, int width, int height);
+
 public:
     /**
      * @brief Метод для инициализации окна.
@@ -50,17 +53,20 @@ public:
      */
     static void Terminate();
 
+    static int getWidth();
+    static int getHeight();
+
     /**
      * @brief Метод для установки режима курсора.
      * @param mode - Режим курсора.
      */
-    // static void setCursorMode(int mode);
+    static void setCursorMode(int mode);
 
     /**
      * @brief Метод для установки флага закрытия окна.
      * @param flag - Флаг закрытия окна.
      */
-    // static void setShouldClose(bool flag);
+    static void setShouldClose(bool flag);
 
     /**
      * @brief Метод для проверки, должно ли окно быть закрыто.

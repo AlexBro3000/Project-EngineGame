@@ -17,7 +17,7 @@ Texture::Texture(const char* file, GLenum type, GLenum slot, GLenum pxl_format, 
 
 	// Configures the type of algorithm that is used to make the image smaller or bigger
     // GL_TEXTURE_MIN - посмотреть другие настройки
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); // GL_NEAREST_MIPMAP_LINEAR
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR); // GL_NEAREST_MIPMAP_LINEAR
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	// Configures the way the texture repeats (if it does at all)
@@ -44,7 +44,7 @@ Texture::~Texture()
 	glDeleteTextures(1, &ID);
 }
 
-void Texture::useShaderUniform(ShaderProgram& shader, const char* uniform)
+void Texture::useShaderUniform(ShaderProgram& shader, const char* uniform, int value)
 {
 	shader.use();
 	glUniform1i(glGetUniformLocation(shader.getID(), uniform), 0);

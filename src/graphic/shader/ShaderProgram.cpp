@@ -26,6 +26,14 @@ GLuint ShaderProgram::getID()
 	return ID;
 }
 
+bool ShaderProgram::isCompiled() const
+{
+	if (ID) {
+		return true;
+	}
+	return false;
+}
+
 bool ShaderProgram::load(const std::string& file_vert, const std::string& file_frag)
 {
 	std::string vert_code, frag_code;
@@ -101,14 +109,6 @@ bool ShaderProgram::load(const std::string& file_vert, const std::string& file_f
 void ShaderProgram::use() const
 {
 	glUseProgram(ID);
-}
-
-bool ShaderProgram::isCompiled() const
-{
-	if (ID) {
-		return true;
-	}
-	return false;
 }
 
 std::string ShaderProgram::readShaderCode(const std::string& file)

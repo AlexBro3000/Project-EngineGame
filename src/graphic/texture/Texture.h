@@ -14,7 +14,7 @@ public:
 	Texture(const char* file, GLenum type, GLenum slot, GLenum pxl_format, GLenum pxl_type);
 	~Texture();
 
-	void useShaderUniform(ShaderProgram& shader, const char* uniform);
+	void useShaderUniform(ShaderProgram& shader, const char* uniform, int value);
 
 	void bind();
 	void unbind();

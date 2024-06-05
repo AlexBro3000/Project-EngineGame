@@ -8,7 +8,8 @@ project(Project-EngineGame)
 
 # Указание исходных файлов.
 set(SOURCES
-	${CMAKE_CURRENT_SOURCE_DIR}/src/include/include.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/core/client/camera/Camera.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/core/client/camera/Camera.cpp
 	
 	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/buffer/EBO.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/graphic/buffer/EBO.cpp
@@ -32,6 +33,9 @@ set(SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/src/system/window/Window.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/system/window/Window.h
 
+	${CMAKE_CURRENT_SOURCE_DIR}/src/utils/DefiningTypes.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/utils/include.cpp
+	
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
 )
 
@@ -78,13 +82,17 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
+# Добавление поддиректории с библиотекой GLAD и связывание её с проектом.
+add_subdirectory(lib/glad)
+target_link_libraries(${PROJECT_NAME} glad)
+
 # Добавление поддиректории с библиотекой GLFW и связывание её с проектом.
 add_subdirectory(lib/glfw)
 target_link_libraries(${PROJECT_NAME} glfw)
 
-# Добавление поддиректории с библиотекой GLAD и связывание её с проектом.
-add_subdirectory(lib/glad)
-target_link_libraries(${PROJECT_NAME} glad)
+# Добавление поддиректории с библиотекой GLM и связывание её с проектом.
+add_subdirectory(lib/glm)
+target_link_libraries(${PROJECT_NAME} glm)
 
 # Добавление библиотеки stb как объектной библиотеки и связывание её с проектом.
 add_library(stb INTERFACE)
